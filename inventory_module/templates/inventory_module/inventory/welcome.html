@@ -1,0 +1,20 @@
+
+{% extends "inventory_module/base.html" %}
+
+{% block title %} welcome to Inventory System  {% endblock%}
+
+{% block content %}
+
+<h1>Welcome to Dorabot's Inventory System</h1>
+
+<form action="/inventory_module/inventory_page/" method="GET">
+    User Name: <input type="text" name="user_name">
+    <p/>
+    Password: <input type="password" name="passwd">
+    <p/>
+    <input type="submit" name="login_btn" value="LogIn">
+    <p/>{{ login_warning }}
+</form>
+
+
+{% endblock %}
