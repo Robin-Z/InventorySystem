@@ -24,7 +24,7 @@ The login user is:{{ user_name }}
         <th>goods_remark</th>
     </tr>
     
-    {% for good in goods_list %}
+    {% for good in goods_per_page %}
     <tr> 
         <td>{{ row_num }}</td>
         <td>{{ good.goods_name }}</td>
@@ -38,10 +38,22 @@ The login user is:{{ user_name }}
         <td>{{ good.remark }}</td>
     </tr>
     {% endfor %}
-
 </table>
 
+<div class="pagination">
+    <span class="step-links">
+        {% if goods_per_page.has_previous %}
+        <a href="?page={{ goods_per_page.previous_page_number }}">previous </a>
+        {% endif %}
 
+        <span class="current" >
+            Page {{ goods_per_page.number }} of {{ goods_per_page.paginator.num_pages }}
+        </span>
 
+        {% if goods_per_page.has_next %}
+            <a href="?page={{ goods_per_page.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
 
 {% endblock %}
