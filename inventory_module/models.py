@@ -95,6 +95,17 @@ class goods(models.Model):
     def __unicode__(self):
         return u'Goods: %s, %s' % (self.goods_name, self.goods_location)
 
+# Users borrow goods
+class borrow_goods_list(models.Model):
+    borrower = models.ForeignKey(user,related_name='borrower_in_user')
+    borrow_goods = models.ForeignKey(goods)
+    borrow_goods_qty = models.IntegerField()
+    borrow_date = models.DateField()
+    return_date = models.DateField(blank=True, null=True)
+    borrow_status = models.CharField(max_length=10, default='Open')
+
+    def __unicode__(self):
+        return u'Borrower: %s' % (self.borrower)
 
 
 
