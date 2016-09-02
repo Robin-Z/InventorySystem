@@ -1,0 +1,65 @@
+
+
+{% extends "inventory_module/inventory/main_page.html" %}
+
+
+{% block title %} inventory page {% endblock %}
+
+{% block content %}
+
+{{ block.super }}
+
+<div class="inventory_list">
+
+<h1>Here is the inventory list. </h1>
+
+The login user is:{{ user_name }}
+
+<table border="1">
+    <tr>
+        <th>No.</th>
+        <th>goods_name</th>
+        <th>goods_part_num</th>
+        <th>goods_spec</th>
+        <th>goods_revision</th>
+        <th>goods_qty</th>
+        <th>goods_unit</th>
+        <th>goods_status</th>
+        <th>goods_location</th>
+        <th>goods_remark</th>
+    </tr>
+    
+    {% for good in goods_per_page %}
+    <tr> 
+        <td>{{ row_num }}</td>
+        <td>{{ good.goods_name }}</td>
+        <td>{{ good.goods_part_num }}</td>
+        <td>{{ good.goods_spec }}</td>
+        <td>{{ good.goods_revision }}</td>
+        <td>{{ good.goods_qty }}</td>
+        <td>{{ good.goods_unit }}</td>
+        <td>{{ good.goods_status }}</td>
+        <td>{{ good.goods_location }}</td>
+        <td>{{ good.remark }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if goods_per_page.has_previous %}
+        <a href="?page={{ goods_per_page.previous_page_number }}">previous </a>
+        {% endif %}
+
+        <span class="current" >
+            Page {{ goods_per_page.number }} of {{ goods_per_page.paginator.num_pages }}
+        </span>
+
+        {% if goods_per_page.has_next %}
+            <a href="?page={{ goods_per_page.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}

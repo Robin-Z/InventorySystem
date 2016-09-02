@@ -81,8 +81,6 @@ class goods(models.Model):
     goods_spec = models.CharField(max_length=50)
     goods_revision = models.CharField(max_length=50)
     goods_qty = models.IntegerField()
-    goods_unit = models.CharField(max_length=10, null=True)
-    goods_status = models.CharField(max_length=10, null=True)
     goods_location = models.CharField(max_length=200)
     remark = models.CharField(max_length=200)
     create_date = models.DateField()
