@@ -45,7 +45,6 @@ def inventory(request):
         goods_per_page = paginator.page(paginator.num_pages)
         
     return render(request, 'inventory_module/inventory/details/inventory_page.html',{'goods_list': goods_list, 'goods_per_page':goods_per_page})
-    #return render(request, 'inventory_module/inventory/main_page.html',{'goods_list': goods_list, 'goods_per_page':goods_per_page})
 
             
 
