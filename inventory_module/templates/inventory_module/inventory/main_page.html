@@ -4,11 +4,17 @@
 {% block title %} Main Page {% endblock %}
 
 {% block content %}
+
+<h1>Dorabot Inventory System</h1>
+<p/>
 <div class="main_page">
-<label for=""><li>Inventory List</li></label>
-<label for=""><li>My Inventory</li></label>
+{% url 'inventory' as inventory_list_url %}
+<li><a href="{{ inventory_list_url }}">Inventory List</a></li>
+{% url 'my_borrow_list' as borrow_list_url %}
+<li><a href="{{ borrow_list_url }}">My Inventory</a></li>
 <label for=""><li>My Info</li></label>
 
 </div>
+    Welcome login: {{ request.user}}
 
 {% endblock %}

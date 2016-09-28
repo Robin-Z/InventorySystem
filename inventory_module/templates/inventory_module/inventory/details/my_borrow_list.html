@@ -1,0 +1,43 @@
+
+{% extends "inventory_module/inventory/main_page.html" %}
+
+{% block title %} My Borrow List {% endblock %}
+
+{% block content %}
+
+{{ block.super }}
+
+<div class="my_borrow_list">
+<table border="1">
+    <tr>
+        <th>No.</th>
+        <th>goods_name</th>
+        <th>goods_part_num</th>
+        <th>goods_spec</th>
+        <th>goods_revision</th>
+        <th>goods_unit</th>
+        <th>borrow_qty</th>
+        <th>borrow date</th>
+        <th>borrow status</th>
+    </tr>
+
+ {% for borrow_good in borrow_good_arr %}
+    <tr> 
+        <td>{{ forloop.counter }}</td>
+        <td>{{ borrow_good.goods_name }}</td>
+        <td>{{ borrow_good.goods_part_num }}</td>
+        <td>{{ borrow_good.goods_spec }}</td>
+        <td>{{ borrow_good.goods_revision }}</td>
+        <td>{{ borrow_good.goods_unit }}</td>
+        <td>{{ borrow_good.borrow_goods_qty }}</td>
+        <td>{{ borrow_good.borrow_date }}</td>
+        <td>{{ borrow_good.borrow_status }}</td>
+    </tr>
+ {% endfor %}
+
+</table>
+
+</div>
+
+
+{% endblock %}

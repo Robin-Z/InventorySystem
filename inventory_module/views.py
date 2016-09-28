@@ -1,39 +1,27 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
+from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from models import user, goods 
+from models import goods, borrow_goods_list
+from forms import borrow_material_form
 
-# Create your views here.
+import datetime
 
-def welcome(request):
-    return render(request, 'inventory_module/inventory/welcome.html')
+"""
+User Django's buildin login/logout system, so delete my own login and access filter views here.
+As cannot get request user content with my own views.
+"""
 
-def access_filter(request):
-    # Receive user name and password from welcome.html page
-    userName = request.GET['user_name']
-    pwd = request.GET['passwd']
-    
-    # Judge if user name and password are correct, if correct direct to inventory_page.html, otherwise show user the warning
-    if userName != '' and pwd != '':
-        try:
-            visitUser = user.objects.get(user_name=request.GET['user_name'])
-            if pwd == visitUser.user_passwd:
-                return render(request, 'inventory_module/inventory/details/inventory_page.html',{'user_name':userName, 'passwd':pwd,})
-                #return render(request, 'inventory_module/inventory/main_page.html',{'user_name':userName, 'passwd':pwd,})
-            else:
-                login_warning = 'user name or pwd is incorrect!'
-                return render(request,'inventory_module/inventory/welcome.html',{'login_warning': login_warning})
-        except:
-            login_warning = 'No this user!'
-            return render(request, 'inventory_module/inventory/welcome.html', {'login_warning': login_warning})
-    else:
-        login_warning = 'user name or password cannot be blank!'
-        return render(request, 'inventory_module/inventory/welcome.html',{'login_warning': login_warning})
-
-
+# The information of the material in inventory
 def inventory(request):
     
     #get inventory info from database and show them in inventory_page.html
+    print('inventory page...')
+    print('login user:')
+    print request.user
+    print('login user id:')
+    print request.user.id
+
     goods_list = goods.objects.all()
     paginator = Paginator(goods_list, 1)
     page = request.GET.get('page')
@@ -43,8 +31,56 @@ def inventory(request):
         goods_per_page = paginator.page(1)
     except EmptyPage:
         goods_per_page = paginator.page(paginator.num_pages)
-        
-    return render(request, 'inventory_module/inventory/details/inventory_page.html',{'goods_list': goods_list, 'goods_per_page':goods_per_page})
+    
+    return render(request, 'inventory_module/inventory/details/inventory_page.html',{'goods_list': goods_list, 'goods_per_page':goods_per_page, 'user_name': request.user})
 
-            
+# The view of borrow material
+def borrow_material(request, good_id):
+    good = goods.objects.values().get(id=good_id)
+    print good['goods_revision']
+    print good['goods_name']
+
+    good_apply_dict = {'goods_id': good['id'],
+                       'goods_name': good['goods_name'],
+                       'goods_part_num': good['goods_part_num'],
+                       'goods_spec': good['goods_spec'],
+                       'goods_revision': good['goods_revision'],
+                       'goods_location': good['goods_location'],
+                       'goods_unit': good['goods_unit'],
+                       'goods_onhand_qty': int(good['goods_qty']),
+                       'goods_borrow_qty': 0,
+                       'goods_borrow_date': datetime.datetime.now()}
+
+    print good_apply_dict
+
+    # Form bind data
+    good_form = borrow_material_form(good_apply_dict)
+    return render(request, 'inventory_module/inventory/details/borrow_material.html', {'form': good_form})
+
+
+# The information of the material that the user borrowed
+def my_borrow(request):
+    login_user = request.user
+
+    print login_user
+    print login_user.id
+
+    borrow_goods = []
+    borrow_good_arr = []
+
+    # Get borrow_goods info with user_id
+    borrow_list = borrow_goods_list.objects.values().filter(borrower_id=login_user.id)
+
+    # Get good info with goods_id
+    for borrow in borrow_list:
+        borrow_goods.append(goods.objects.values().get(id=borrow['borrow_goods_id']))
+
+    # Concatenate borrow_goods_list and goods
+    for index_i in range(int(len(borrow_list))):
+        borrow_good_dict = dict(borrow_list[index_i], **borrow_goods[index_i])
+        borrow_good_arr.append(borrow_good_dict)
+
+    print borrow_good_arr
+
+    return render(request, 'inventory_module/inventory/details/my_borrow_list.html', {'borrow_good_arr': borrow_good_arr})
 
