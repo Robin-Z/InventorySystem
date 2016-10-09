@@ -14,7 +14,6 @@ As cannot get request user content with my own views.
 
 # The information of the material in inventory
 def inventory(request):
-    
     #get inventory info from database and show them in inventory_page.html
     print('inventory page...')
     print('login user:')
@@ -37,9 +36,6 @@ def inventory(request):
 # The view of borrow material
 def borrow_material(request, good_id):
     good = goods.objects.values().get(id=good_id)
-    print good['goods_revision']
-    print good['goods_name']
-
     good_apply_dict = {'goods_id': good['id'],
                        'goods_name': good['goods_name'],
                        'goods_part_num': good['goods_part_num'],
@@ -51,12 +47,9 @@ def borrow_material(request, good_id):
                        'goods_borrow_qty': 0,
                        'goods_borrow_date': datetime.datetime.now()}
 
-    print good_apply_dict
-
     # Form bind data
     good_form = borrow_material_form(good_apply_dict)
     return render(request, 'inventory_module/inventory/details/borrow_material.html', {'form': good_form})
-
 
 # The information of the material that the user borrowed
 def my_borrow(request):
@@ -80,7 +73,18 @@ def my_borrow(request):
         borrow_good_dict = dict(borrow_list[index_i], **borrow_goods[index_i])
         borrow_good_arr.append(borrow_good_dict)
 
-    print borrow_good_arr
-
     return render(request, 'inventory_module/inventory/details/my_borrow_list.html', {'borrow_good_arr': borrow_good_arr})
+
+def add_borrow_record(request):
+    add_record_success = borrow_goods_list.objects.create(borrower_id=request.user.id,
+                                                          borrow_goods_id=request.POST['goods_id'],
+                                                          borrow_goods_qty=request.POST['goods_borrow_qty'],
+                                                          borrow_date=request.POST['goods_borrow_date'],
+                                                          borrow_status='Open')
+    if add_record_success:
+        add_record_note = 'Borrow ' + request.POST['goods_borrow_qty'] + ' ' + request.POST['goods_unit'] + ' ' + request.POST['goods_name'] + ' sucessfully!'
+    else:
+        add_record_note = 'Borrow ' + request.POST['goods_borrow_qty'] + ' ' + request.POST['goods_unit'] + ' ' + request.POST['goods_name'] + ' failed!'
+
+    return render(request, 'inventory_module/inventory/details/borrow_result.html', {'borrow_result': add_record_note})
 
