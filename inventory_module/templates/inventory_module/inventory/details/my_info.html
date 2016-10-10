@@ -1,0 +1,14 @@
+{% extends "inventory_module/inventory/main_page.html" %}
+
+{% block title %} My Info {% endblock %}
+
+{% block content %}
+
+{{ block.super }}
+
+    <table>
+        {{ my_info_form.as_table }}
+    </table>
+
+
+{% endblock %}
