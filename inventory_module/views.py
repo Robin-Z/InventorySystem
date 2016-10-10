@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from models import goods, borrow_goods_list
-from forms import borrow_material_form
+from forms import borrow_material_form, my_info_form
 
 import datetime
 
@@ -15,12 +15,6 @@ As cannot get request user content with my own views.
 # The information of the material in inventory
 def inventory(request):
     #get inventory info from database and show them in inventory_page.html
-    print('inventory page...')
-    print('login user:')
-    print request.user
-    print('login user id:')
-    print request.user.id
-
     goods_list = goods.objects.all()
     paginator = Paginator(goods_list, 1)
     page = request.GET.get('page')
@@ -54,10 +48,6 @@ def borrow_material(request, good_id):
 # The information of the material that the user borrowed
 def my_borrow(request):
     login_user = request.user
-
-    print login_user
-    print login_user.id
-
     borrow_goods = []
     borrow_good_arr = []
 
@@ -73,18 +63,44 @@ def my_borrow(request):
         borrow_good_dict = dict(borrow_list[index_i], **borrow_goods[index_i])
         borrow_good_arr.append(borrow_good_dict)
 
-    return render(request, 'inventory_module/inventory/details/my_borrow_list.html', {'borrow_good_arr': borrow_good_arr})
+    # Show in separate pages
+    paginator = Paginator(borrow_good_arr, 5)
+    page = request.GET.get('page')
+    try:
+        borrow_good_per_page = paginator.page(page)
+    except PageNotAnInteger:
+        borrow_good_per_page = paginator.page(1)
+    except EmptyPage:
+        borrow_good_per_page = paginator.page(paginator.num_pages)
+
+    return render(request, 'inventory_module/inventory/details/my_borrow_list.html', {'borrow_good_arr': borrow_good_arr, 'borrow_good_per_page': borrow_good_per_page, 'user_name': request.user})
+
+
+def my_info(request):
+    info_form = my_info_form({'user_id': request.user.id,
+                              'user_name': request.user.username,
+                              'email': request.user.email})
+    return render(request, 'inventory_module/inventory/details/my_info.html', {'my_info_form': info_form})
 
 def add_borrow_record(request):
-    add_record_success = borrow_goods_list.objects.create(borrower_id=request.user.id,
-                                                          borrow_goods_id=request.POST['goods_id'],
-                                                          borrow_goods_qty=request.POST['goods_borrow_qty'],
-                                                          borrow_date=request.POST['goods_borrow_date'],
-                                                          borrow_status='Open')
-    if add_record_success:
-        add_record_note = 'Borrow ' + request.POST['goods_borrow_qty'] + ' ' + request.POST['goods_unit'] + ' ' + request.POST['goods_name'] + ' sucessfully!'
-    else:
-        add_record_note = 'Borrow ' + request.POST['goods_borrow_qty'] + ' ' + request.POST['goods_unit'] + ' ' + request.POST['goods_name'] + ' failed!'
+    add_record_note = ''
 
+    if request.POST.has_key('submit_btn'):
+        if borrow_goods_list.objects.create(borrower_id=request.user.id,
+                                            borrow_goods_id=request.POST['goods_id'],
+                                            borrow_goods_qty=request.POST['goods_borrow_qty'],
+                                            borrow_date=request.POST['goods_borrow_date'],
+                                            borrow_status='Open'):
+            add_record_note = 'Borrow ' + request.POST['goods_borrow_qty'] + ' ' + request.POST['goods_unit'] + ' ' + \
+                              request.POST['goods_name'] + ' sucessfully!'
+        else:
+            add_record_note = 'Borrow ' + request.POST['goods_borrow_qty'] + ' ' + request.POST['goods_unit'] + ' ' + \
+                              request.POST['goods_name'] + ' failed!'
+
+    elif request.POST.has_key('cancel_btn'):
+        print 'cancel'
+        return render(request, 'inventory_module/inventory/details/inventory_page.html')
     return render(request, 'inventory_module/inventory/details/borrow_result.html', {'borrow_result': add_record_note})
+
+
 
