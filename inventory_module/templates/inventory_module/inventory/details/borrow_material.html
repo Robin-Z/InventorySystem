@@ -3,22 +3,25 @@
 
 {% block title %} borrow material {% endblock %}
 
-{% block content %}
+{{ block.super}}
 
-    {{ block.super}}
+{% block right_content %}
 
-    <div class="borrow_material">
-        <form action="" method="post">
+    <div id="right_sidebar" class="no-wrap">
+    <p/>
+        <form action="{% url 'inventory_module.views.add_borrow_record' %}" method="post" onsubmit="return checkBorrowQty()">
             {% csrf_token %}
             <table>
                 {{ form.as_table }}
             </table>
 
-            <p/>
-            <input type="submit" value="Cancel" name="cancel_borrow"/>
-	        <input type="submit" value="Submit" name="confirm_borrow"/>
-
+            <span class="borrow_location">
+                {% url 'inventory' as inventory_list_url %}
+                <input type="button" value="Cancel" name="cancel_btn" onclick="location.href='{{ inventory_list_url }}'"/>
+	            <input type="submit" value="Submit" name="submit_btn"/>
+            </span>
         </form>
+
     </div>
 
 {% endblock %}
