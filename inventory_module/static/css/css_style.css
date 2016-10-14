@@ -1,0 +1,278 @@
+
+.typewriter{
+    font-family: "Courier New", Courier, monospace;
+    font-size: 2em;
+    font-weight: 900;
+    letter-spacing: 0;
+    word-spacing: -.2em;
+}
+
+.date-style {
+    text-align: right;
+}
+
+.enclosed {
+    border: 1px solid #0000ff;
+}
+
+.emphasized {
+    font-style: italic;
+}
+
+body {
+    width: 100%;
+}
+
+div#login {
+    float: left;
+    position: fixed;
+    border: 0px solid black;
+    width: 80%;
+    top: 200px;
+    margin-left: 5em;
+    margin-right: 5em;
+    max-width: 2000px;
+}
+
+div#header {
+    float: left;
+    position: fixed;
+    width: 100%;
+    height: 10%;
+    border: 0px solid black;
+    background-color: #990000;
+    left: 0;
+    top: 0;
+    max-width: 2000px;
+}
+
+div#invisible-header {
+    width: 100%;
+    visibility: hidden;
+    margin-top: -1.2em;
+}
+
+div#content {
+    float: left;
+    position: relative;
+    width: 100%;
+    height: 80%;
+    border: 0px solid black;
+    margin: 0 auto 0 auto;
+    max-width: 2000px;
+}
+
+div#left_sidebar {
+    float: left;
+    width: 12%;
+    height: 80%;
+    height: 650px;
+    border: 0px dashed black;
+    display: inline-block;
+}
+
+div#right_sidebar {
+    float: right;
+    font-size: 1.1em;
+    width: 85%;
+    height: 80%;
+    height: 650px;
+    border-left: 1px dashed black;
+}
+
+div.pagination {
+    float: left;
+    width: 90%;
+    text-align: center;
+    border: 0px solid black;
+    margin-left: 1em;
+    margin-bottom: .5em;
+    margin-top: .2em;
+}
+
+div.no-wrap {
+    clear: none;
+}
+
+div#footer {
+    float: left;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    border: 0px solid black;
+    max-width: 2000px;
+}
+
+form {
+    width: 50%;
+    margin: 0 auto 0 auto;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 1em;
+}
+
+p {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    text-indent: 1em;
+}
+
+div#header h2, div#invisible-header h2 {
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: 900;
+    color: white;
+    font-size: 2em;
+    margin-left: 2%;
+    padding: 0;
+}
+
+h1 {
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-size: 2em;
+    text-align: center;
+}
+
+h1.boxed {
+    border: 5px solid red;
+    padding: .1em;
+}
+
+table {
+    border-collapse: collapse;
+    width: 90%;
+    text-align: center;
+    margin-left: 1em;
+    margin-bottom: 1em;
+    margin-top: 2em;
+}
+
+td, th {
+    border: 1px solid blue;
+    padding: .25em;
+    width: 10%;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 1em;
+    color: black;
+}
+
+div#login table.login{
+    text-align: center;
+    margin-left: 10em;
+    margin-bottom: 1em;
+    border: 0px solid black;
+    width: 50%;
+}
+
+div#login td, tr{
+    border: 0px solid black;
+    padding: .25em;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 1em;
+    color: black;
+}
+
+div#login td.login_item {
+    text-align: right;
+    font-weight: 900;
+    font-size: 1em;
+    width: auto;
+}
+
+div#login td.login_info {
+    text-align: left;
+    width: auto;
+}
+
+
+div#header label.username {
+    float: right;
+    position: fixed;
+    margin-right: 2em;
+    top: 60px;
+    right: 50px;
+    color: aqua;
+    font-weight: bold;
+}
+
+label.foot {
+    float: right;
+    margin-right: 2em;
+    text-decoration: underline;
+    color: blue;
+}
+
+a {
+    color: #b8860b;
+}
+
+a:hover {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:active {
+    font-size: 1.25em;
+}
+
+a:visited {
+    color: blue;
+}
+
+div#left_sidebar ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+div#left_sidebar ul li a{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.1em;
+    font-weight: 900;
+    text-decoration: none;
+    color: white;
+    display: block;
+    padding: .35em;
+}
+
+div#left_sidebar ul li {
+    background-color: blue;
+    margin: 0 0 .25em 0;
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
+    margin-bottom: .25em;
+    padding: .25em;
+    font-size: 1em;
+    border: 0;
+}
+
+fieldset.foot {
+    border-top: 1.5px dashed black;
+    border-left: 0em;
+    border-right: 0em;
+    border-bottom: 0em;
+}
+
+div#login input[type="text"], input[type="password"] {
+    margin-bottom: .25em;
+    padding: .25em;
+    font-size: 1em;
+    border: 1px solid black;
+}
+
+input[type="submit"], input[type="button"] {
+    margin-left: 1em;
+}
+
+p.login_warn {
+    color: red;
+    margin-left: 30em;
+}
+
+span.login {
+    margin-left: 20em;
+}
+
+span.borrow_location {
+    float: inherit;
+
+}
