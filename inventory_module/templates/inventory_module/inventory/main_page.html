@@ -4,17 +4,42 @@
 {% block title %} Main Page {% endblock %}
 
 {% block content %}
+        {{ block.super }}
 
-<h1>Dorabot Inventory System</h1>
-<p/>
-<div class="main_page">
-{% url 'inventory' as inventory_list_url %}
-<li><a href="{{ inventory_list_url }}">Inventory List</a></li>
-{% url 'my_borrow_list' as borrow_list_url %}
-<li><a href="{{ borrow_list_url }}">My Inventory</a></li>
-<label for=""><li>My Info</li></label>
-
+<div id="invisible-header" class="no-wrap">
+    <h2>Dorabot Inventory System</h2>
+    <label class="username emphasized">Welcome login: {{ request.user}}</label>
 </div>
-    Welcome login: {{ request.user}}
+
+<div id="header" class="no-wrap">
+     <h2>Dorabot Inventory System</h2>
+     <label class="username emphasized">Welcome login: {{ request.user}}</label>
+</div>
+
+<div id="content" class="no-wrap">
+
+     <div id="left_sidebar" class="no-wrap">
+        <ul>
+            {% url 'inventory' as inventory_list_url %}
+            <li><a href="{{ inventory_list_url }}">Inventory List</a></li>
+            {% url 'my_borrow_list' as borrow_list_url %}
+            <li><a href="{{ borrow_list_url }}">My Inventory</a></li>
+            {% url 'my_info' as my_info_url %}
+            <li><a href="{{ my_info_url }}">My Info</a></li>
+        </ul>
+    </div>
+
+{% block right_content %}
+
+
+{% endblock %}
+
+ </div>
+
+<div id="footer" class="no-wrap">
+        <fieldset class="foot">
+            <label class="foot emphasized">Dorabot.Inc</label>
+        </fieldset>
+</div>
 
 {% endblock %}
