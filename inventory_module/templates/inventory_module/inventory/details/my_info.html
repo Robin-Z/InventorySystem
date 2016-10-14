@@ -2,13 +2,15 @@
 
 {% block title %} My Info {% endblock %}
 
-{% block content %}
+{% block right_content %}
 
 {{ block.super }}
 
-    <table>
-        {{ my_info_form.as_table }}
-    </table>
-
+    <div id="right_sidebar" class="no-wrap">
+        <h1 class="typewriter">My Info</h1>
+            <table>
+            {{ my_info_form.as_table }}
+            </table>
+    </div>
 
 {% endblock %}
