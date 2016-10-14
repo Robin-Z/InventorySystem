@@ -1,14 +1,17 @@
 
+
 {% extends "inventory_module/inventory/main_page.html" %}
 
 {% block title %} My Borrow List {% endblock %}
 
-{% block content %}
+{% block right_content %}
 
 {{ block.super }}
 
-<div class="my_borrow_list">
-<table border="1">
+<div id="right_sidebar" class="no-wrap">
+<h1 class="typewriter">Here is my borrow list. </h1>
+
+<table>
     <tr>
         <th>No.</th>
         <th>goods_name</th>
@@ -21,7 +24,7 @@
         <th>borrow status</th>
     </tr>
 
- {% for borrow_good in borrow_good_arr %}
+ {% for borrow_good in borrow_good_per_page %}
     <tr> 
         <td>{{ forloop.counter }}</td>
         <td>{{ borrow_good.goods_name }}</td>
@@ -37,7 +40,21 @@
 
 </table>
 
-</div>
+ <div class="pagination">
+    <span class="emphasized">
+        {% if borrow_good_per_page.has_previous %}
+        <a href="?page={{ borrow_good_per_page.previous_page_number }}">previous </a>
+        {% endif %}
 
+        <span class="current" >
+            Page {{ borrow_good_per_page.number }} of {{ borrow_good_per_page.paginator.num_pages }}
+        </span>
+
+        {% if borrow_good_per_page.has_next %}
+            <a href="?page={{ borrow_good_per_page.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+</div>
 
 {% endblock %}
