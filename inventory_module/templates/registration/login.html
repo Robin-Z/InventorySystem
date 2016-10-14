@@ -5,28 +5,32 @@
 
 {% block content %}
 
-<div class="welcom_page">
+<div id="login">
 
-<h1>Welcome to Dorabot's Inventory System</h1>
+<h1>Welcome to Dorabot Inventory System</h1>
 
 {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
+<p class="login_warn">Your username and password didn't match. Please try again.</p>
 {% endif %}
 
 <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
     {% csrf_token %}
-    <table>
+    <table class="login">
         <tr>
-            <td>{{ form.username.label_tag }}</td>
-            <td>{{ form.username }}</td>
+            <td class="login_item">{{ form.username.label_tag }}</td>
+            <td class="login_info">{{ form.username }}</td>
         </tr>
         <tr>
-            <td>{{ form.password.label_tag }}</td>
-            <td>{{ form.password }}</td>
+            <td class="login_item">{{ form.password.label_tag }}</td>
+            <td class="login_info">{{ form.password }}</td>
         </tr>
     </table>
-    
-    <input type="submit" value="login" />
+
+    <span class="login">
+        <input type="button" id="cancel_btn" value="Cancel" onclick="cancel_login()"/>
+        <input type="submit" id="login_btn" value="Login" />
+    </span>
+
 </form>
 
 </div>
