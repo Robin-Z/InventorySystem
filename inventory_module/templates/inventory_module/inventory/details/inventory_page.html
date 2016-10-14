@@ -1,19 +1,15 @@
 
-
 {% extends "inventory_module/inventory/main_page.html" %}
-
 
 {% block title %} inventory page {% endblock %}
 
-{% block content %}
+    {{ block.super }}
+{% block right_content %}
+<div id="right_sidebar" class="no-wrap">
 
-{{ block.super }}
+<h1 class="typewriter">Here is the inventory list. </h1>
 
-<div class="inventory_list">
-
-<h1>Here is the inventory list. </h1>
-
-<table border="1">
+<table>
     <tr>
         <th>No.</th>
         <th>goods_id</th>
@@ -46,10 +42,10 @@
     </tr>
     {% endfor %}
 </table>
-</div>
 
-<div class="pagination">
-    <span class="step-links">
+
+<div class="pagination no-wrap">
+    <span class="emphasized">
         {% if goods_per_page.has_previous %}
         <a href="?page={{ goods_per_page.previous_page_number }}">previous </a>
         {% endif %}
@@ -62,6 +58,7 @@
             <a href="?page={{ goods_per_page.next_page_number }}">next</a>
         {% endif %}
     </span>
+</div>
 </div>
 
 {% endblock %}
