@@ -20,10 +20,16 @@ function checkBorrowQty(){
     var borrowQty = borrowQtyField.value;
     var onhandQty = onhandQtyField.value;
 
-    if(borrowQty > onhandQty){
-        warningText = "There is only " + onhandQty + " left! Not enough for you!";
-        alert(warningText)
-        borrowQtyField.select;
+    if(borrowQty <= 0){
+        alert("Invalid Good borrow qty: " + borrowQty);
+        borrowQtyField.focus();
         return false;
     }
+
+    if(borrowQty > onhandQty){
+        alert("There is only " + onhandQty + " left! Not enough for you!");
+        borrowQtyField.focus();
+        return false;
+    }
+
 }
