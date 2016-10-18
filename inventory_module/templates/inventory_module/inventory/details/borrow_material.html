@@ -7,7 +7,7 @@
 
 {% block right_content %}
 
-    <div id="right_sidebar" class="no-wrap">
+    <div id="right_sidebar" class="">
     <p/>
         <form action="{% url 'inventory_module.views.add_borrow_record' %}" method="post" onsubmit="return checkBorrowQty()">
             {% csrf_token %}
