@@ -1,10 +1,8 @@
-from django.shortcuts import render, render_to_response
-from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
 from models import goods, borrow_goods_list
 from forms import borrow_material_form, my_info_form
-
+from django.contrib.auth.decorators import login_required
 import datetime
 
 """
@@ -12,7 +10,11 @@ User Django's buildin login/logout system, so delete my own login and access fil
 As cannot get request user content with my own views.
 """
 
-# The information of the material in inventory
+"""
+The information of the material in inventory
+Use decorator to filter unlogin user
+"""
+@login_required(login_url='/inventory_module/accounts/login')
 def inventory(request):
     #get inventory info from database and show them in inventory_page.html
     goods_list = goods.objects.all()
@@ -28,6 +30,7 @@ def inventory(request):
     return render(request, 'inventory_module/inventory/details/inventory_page.html',{'goods_list': goods_list, 'goods_per_page':goods_per_page, 'user_name': request.user})
 
 # The view of borrow material
+@login_required(login_url='/inventory_module/accounts/login')
 def borrow_material(request, good_id):
     good = goods.objects.values().get(id=good_id)
     good_apply_dict = {'goods_id': good['id'],
@@ -46,6 +49,7 @@ def borrow_material(request, good_id):
     return render(request, 'inventory_module/inventory/details/borrow_material.html', {'form': good_form})
 
 # The information of the material that the user borrowed
+@login_required(login_url='/inventory_module/accounts/login')
 def my_borrow(request):
     login_user = request.user
     borrow_goods = []
@@ -75,13 +79,14 @@ def my_borrow(request):
 
     return render(request, 'inventory_module/inventory/details/my_borrow_list.html', {'borrow_good_arr': borrow_good_arr, 'borrow_good_per_page': borrow_good_per_page, 'user_name': request.user})
 
-
+@login_required(login_url='/inventory_module/accounts/login')
 def my_info(request):
     info_form = my_info_form({'user_id': request.user.id,
                               'user_name': request.user.username,
                               'email': request.user.email})
     return render(request, 'inventory_module/inventory/details/my_info.html', {'my_info_form': info_form})
 
+@login_required(login_url='/inventory_module/accounts/login')
 def add_borrow_record(request):
     add_record_note = ''
 
@@ -91,6 +96,12 @@ def add_borrow_record(request):
                                             borrow_goods_qty=request.POST['goods_borrow_qty'],
                                             borrow_date=request.POST['goods_borrow_date'],
                                             borrow_status='Open'):
+
+            """ Update onhandQty in database """
+            good_borrowed = goods.objects.get(id=request.POST['goods_id'])
+            good_borrowed.goods_qty = int(request.POST['goods_onhand_qty']) - int(request.POST['goods_borrow_qty'])
+            good_borrowed.save()
+
             add_record_note = 'Borrow ' + request.POST['goods_borrow_qty'] + ' ' + request.POST['goods_unit'] + ' ' + \
                               request.POST['goods_name'] + ' sucessfully!'
         else:
@@ -98,7 +109,6 @@ def add_borrow_record(request):
                               request.POST['goods_name'] + ' failed!'
 
     elif request.POST.has_key('cancel_btn'):
-        print 'cancel'
         return render(request, 'inventory_module/inventory/details/inventory_page.html')
     return render(request, 'inventory_module/inventory/details/borrow_result.html', {'borrow_result': add_record_note})
 
