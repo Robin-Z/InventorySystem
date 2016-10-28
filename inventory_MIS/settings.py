@@ -109,3 +109,71 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOGIN_URL = '/inventory_module/accounts/'
 LOGIN_REDIRECT_URL = '/inventory_module/inventory_page/'
+
+# Logging setting
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        #'require_debug_false': {
+        #    '()': 'django.utils.log.RequireDebugFalse',
+        #},
+        #'require_debug_true': {
+        #    '()': 'django.utils.log.RequireDebugTrue',
+        #},
+    },
+    'formatters': {
+        'simple': {
+            'format': '[%(asctime)s] %(levelname)s %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        },
+        'verbose': {
+            'format': '[%(asctime)s] %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            #'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'development_logfile': {
+            'level': 'DEBUG',
+           # 'filters': ['require_debug_true'],
+            'class': 'logging.FileHandler',
+            'filename': 'logs/django_dev.log',
+            'formatter': 'verbose'
+        },
+        'production_logfile': {
+            'level': 'DEBUG',
+           # 'filters': ['require_debug_false'],
+            'class': 'logging.FileHandler',
+            'filename': 'logs/django_production.log',
+            'formatter': 'verbose'
+        },
+        'dba_logfile': {
+            'level': 'DEBUG',
+            #'filters': ['require_debug_false', 'require_debug_true'],
+            'class': 'logging.FileHandler',
+            'filename': 'logs/django_dba.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['console', 'production_logfile', 'development_logfile'],
+        },
+        'django.db.backends': {
+            'handlers': ['console', 'dba_logfile'],
+        },
+        'django': {
+            'handlers': ['console', 'development_logfile', 'production_logfile'],
+        },
+        'myapp': {
+            'handlers': ['console', 'development_logfile', 'production_logfile'],
+        }
+
+    }
+}
