@@ -1,27 +1,51 @@
-
-{% extends "inventory_module/inventory/main_page.html" %}
+​{% extends "inventory_module/inventory/main_page.html" %}
 
 {% block title %} borrow material {% endblock %}
 
-{{ block.super}}
+{{ block.super }}
 
-{% block right_content %}
+{% block borrow_material_content %}
 
-    <div id="right_sidebar" class="">
-    <p/>
-        <form action="{% url 'inventory_module.views.add_borrow_record' %}" method="post" onsubmit="return checkBorrowQty()">
-            {% csrf_token %}
-            <table>
-                {{ form.as_table }}
-            </table>
+    <div id="right_sidebar" class="row">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-lg-12 text-center">
+                <h3 class="btn-block"><strong>Materil Information</strong></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-sm-10 col-lg-6 col-lg-offset-3 text-center">
+                <form action="{% url 'inventory_module.views.add_borrow_record' %}" method="post"
+                      onsubmit="return checkBorrowQty()">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-hover text-left">
+                                {{ form.as_table }}
+                            </table>
+                        </div>
+                    </div>
 
-            <span class="borrow_location">
-                {% url 'inventory' as inventory_list_url %}
-                <input type="button" value="Cancel" name="cancel_btn" onclick="location.href='{{ inventory_list_url }}'"/>
-	            <input type="submit" value="Submit" name="submit_btn"/>
-            </span>
-        </form>
-
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                    <span class="">
+                        {% url 'inventory' as inventory_list_url %}
+                        <button type="button" class="btn btn-default" value="Cancel" name="cancel_btn"
+                                onclick="location.href='{{ inventory_list_url }}'">
+                           <strong>
+                               Cancel
+                           </strong>
+                        </button>
+	                    <button type="submit" class="btn btn-success" value="Submit" name="submit_btn">
+                            <strong>
+                                Submit
+                            </strong>
+                        </button>
+                    </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
 {% endblock %}
