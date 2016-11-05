@@ -52,11 +52,15 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'inventory_MIS.urls'
+# Add static folder to STATIC_DIRS
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -108,9 +112,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_URL = '/inventory_module/accounts/'
-LOGIN_REDIRECT_URL = '/inventory_module/inventory_page/'
+LOGIN_REDIRECT_URL = '/inventory_module/home/'
 
-# Logging setting
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
