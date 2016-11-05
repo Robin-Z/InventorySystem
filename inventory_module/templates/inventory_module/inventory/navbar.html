@@ -1,0 +1,21 @@
+<div class="masthead">
+    <h3 class="text-muted">Dorabot Inventory System</h3>
+    <nav>
+        <ul class="nav nav-justified">
+            {% url 'home_page' as home_page_url %}
+            <li class=""><a href="{{ home_page_url }}">Home</a></li>
+
+            {% url 'inventory' as inventory_list_url %}
+            <li><a href="{{ inventory_list_url }}">Inventory List</a></li>
+
+            {% url 'my_borrow_list' as borrow_list_url %}
+            <li><a href="{{ borrow_list_url }}">My Inventory</a></li>
+
+            {% url 'my_info' as my_info_url %}
+            <li><a href="{{ my_info_url }}">My Info</a></li>
+
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+</div>
