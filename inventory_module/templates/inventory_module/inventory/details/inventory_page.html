@@ -1,64 +1,62 @@
-
 {% extends "inventory_module/inventory/main_page.html" %}
 
-{% block title %} inventory page {% endblock %}
+{% block title %} Inventory Page {% endblock %}
 
-    {{ block.super }}
-{% block right_content %}
-<div id="right_sidebar" class="">
+{{ block.super }}
 
-<h1 class="typewriter">Here is the inventory list. </h1>
+{% block inventory_content %}
 
-<table>
-    <tr>
-        <th>No.</th>
-        <th>goods_id</th>
-        <th>goods_name</th>
-        <th>goods_part_num</th>
-        <th>goods_spec</th>
-        <th>goods_revision</th>
-        <th>goods_qty</th>
-        <th>goods_unit</th>
-        <th>goods_status</th>
-        <th>goods_location</th>
-        <th>goods_remark</th>
-        <th>Action</th>
-    </tr>
+    <div id="right_sidebar" class="text-center">
+        <h1 class="typewriter">Here is the inventory list. </h1>
+        <table class="table table-hover table-bordered text-center">
+            <tr>
+                <th>No.</th>
+                <th>goods_id</th>
+                <th>goods_name</th>
+                <th>goods_part_num</th>
+                <th>goods_spec</th>
+                <th>goods_revision</th>
+                <th>goods_qty</th>
+                <th>goods_unit</th>
+                <th>goods_status</th>
+                <th>goods_location</th>
+                <th>goods_remark</th>
+                <th>Action</th>
+            </tr>
 
-    {% for good in goods_per_page %}
-    <tr> 
-        <td>{{ forloop.counter }}</td>
-        <td>{{ good.id}}</td>
-        <td>{{ good.goods_name }}</td>
-        <td>{{ good.goods_part_num }}</td>
-        <td>{{ good.goods_spec }}</td>
-        <td>{{ good.goods_revision }}</td>
-        <td>{{ good.goods_qty }}</td>
-        <td>{{ good.goods_unit }}</td>
-        <td>{{ good.goods_status }}</td>
-        <td>{{ good.goods_location }}</td>
-        <td>{{ good.remark }}</td>
-        <td><a href="/inventory_module/borrow_material/{{ good.id }}">Apply</a></td>
-    </tr>
-    {% endfor %}
-</table>
+            {% for good in goods_per_page %}
+                <tr class="active">
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ good.id }}</td>
+                    <td>{{ good.goods_name }}</td>
+                    <td>{{ good.goods_part_num }}</td>
+                    <td>{{ good.goods_spec }}</td>
+                    <td>{{ good.goods_revision }}</td>
+                    <td>{{ good.goods_qty }}</td>
+                    <td>{{ good.goods_unit }}</td>
+                    <td>{{ good.goods_status }}</td>
+                    <td>{{ good.goods_location }}</td>
+                    <td>{{ good.remark }}</td>
+                    <td><a href="/inventory_module/borrow_material/{{ good.id }}">Apply</a></td>
+                </tr>
+            {% endfor %}
+        </table>
 
+        <div class="pagination">
+            <ul class="pager">
+                <span class="btn-block">
+                    {% if goods_per_page.has_previous %}
+                        <a href="?page={{ goods_per_page.previous_page_number }}">previous </a>
+                    {% endif %}
 
-<div class="pagination no-wrap">
-    <span class="emphasized">
-        {% if goods_per_page.has_previous %}
-        <a href="?page={{ goods_per_page.previous_page_number }}">previous </a>
-        {% endif %}
+                    <label class="text-warning"> Page {{ goods_per_page.number }} of {{ goods_per_page.paginator.num_pages }} </label>
 
-        <span class="current" >
-            Page {{ goods_per_page.number }} of {{ goods_per_page.paginator.num_pages }}
-        </span>
-
-        {% if goods_per_page.has_next %}
-            <a href="?page={{ goods_per_page.next_page_number }}">next</a>
-        {% endif %}
-    </span>
-</div>
-</div>
+                    {% if goods_per_page.has_next %}
+                        <a href="?page={{ goods_per_page.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
+            </ul>
+        </div>
+    </div>
 
 {% endblock %}
