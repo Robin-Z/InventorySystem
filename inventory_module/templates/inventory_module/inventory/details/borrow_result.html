@@ -1,11 +1,20 @@
 {% extends "inventory_module/inventory/main_page.html" %}
 
-
 {% block title %} inventory page {% endblock %}
 
 {{ block.super }}
-{% block right_content %}
+{% block borrow_result_content %}
 
-{{ borrow_result }}
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12 text-center">
+
+            <span class="glyphicon glyphicon-ok">
+                <strong>
+                    {{ borrow_result }}
+                </strong>
+            </span>
+
+        </div>
+    </div>
 
 {% endblock %}
