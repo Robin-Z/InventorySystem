@@ -15,11 +15,11 @@ The information of the material in inventory
 Use decorator to filter unlogin user
 """
 
-@login_required(login_url='/inventory_module/accounts/login')
+@login_required(login_url='/inventory_module/accounts/login/')
 def home_page(request):
     return render(request, 'inventory_module/inventory/home.html')
 
-@login_required(login_url='/inventory_module/accounts/login')
+@login_required(login_url='/inventory_module/accounts/login/')
 def inventory(request):
     #get inventory info from database and show them in inventory_page0.html
 
@@ -37,7 +37,7 @@ def inventory(request):
                   'inventory_module/inventory/details/inventory_page.html', {'goods_list': goods_list, 'goods_per_page':goods_per_page, 'user_name': request.user})
 
 # The view of borrow material
-@login_required(login_url='/inventory_module/accounts/login')
+@login_required(login_url='/inventory_module/accounts/login/')
 def borrow_material(request, good_id):
     good = goods.objects.values().get(id=good_id)
     good_apply_dict = {'goods_id': good['id'],
@@ -57,7 +57,7 @@ def borrow_material(request, good_id):
     return render(request, 'inventory_module/inventory/details/borrow_material.html', {'form': good_form})
 
 # The information of the material that the user borrowed
-@login_required(login_url='/inventory_module/accounts/login')
+@login_required(login_url='/inventory_module/accounts/login/')
 def my_borrow(request):
     login_user = request.user
     borrow_goods = []
@@ -85,7 +85,7 @@ def my_borrow(request):
 
     return render(request, 'inventory_module/inventory/details/my_borrow_list.html', {'borrow_good_arr': borrow_good_arr, 'borrow_good_per_page': borrow_good_per_page, 'user_name': request.user})
 
-@login_required(login_url='/inventory_module/accounts/login')
+@login_required(login_url='/inventory_module/accounts/login/')
 def my_info(request):
 
     info_form = my_info_form({'user_id': request.user.id,
@@ -93,7 +93,7 @@ def my_info(request):
                               'email': request.user.email})
     return render(request, 'inventory_module/inventory/details/my_info.html', {'my_info_form': info_form})
 
-@login_required(login_url='/inventory_module/accounts/login')
+@login_required(login_url='/inventory_module/accounts/login/')
 def add_borrow_record(request):
     add_record_note = ''
 
