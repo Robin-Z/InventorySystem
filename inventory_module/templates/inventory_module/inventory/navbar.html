@@ -1,17 +1,16 @@
 <div class="masthead">
-    <div class="row">
-        <div class="col-lg-4">
-            <h3 class="text-muted">Dorabot Inventory System</h3>
-
+   <div class="row">
+        <div id="project-name-div" class="col-md-4 text-left">
+            <h2 id="project-name">Dorabot Inventory System</h2>
         </div>
 
-        <div class="col-lg-6">
+        <div id="welcome-mark" class="col-md-6 col-md-offset-6 text-right">
             {% url 'logout' as logout_url %}
-            <label class=" col-lg-6 col-md-6 col-md-offset-6 col-lg-offset-6">Welcome login: {{ request.user }} <a
-                    href="{{ logout_url }}">[logout]</a> </label>
-
+            <label>Welcome login: {{ request.user }}
+                <a href="{{ logout_url }}">[logout]</a>
+            </label>
         </div>
-    </div>
+   </div>
 
     <nav>
         <ul class="nav nav-justified">
@@ -27,10 +26,12 @@
             {% url 'my_info' as my_info_url %}
             <li><a href="{{ my_info_url }}">My Info</a></li>
 
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
+            {% url 'about_page' as about_page_url %}
+            <li><a href="{{ about_page_url }}">About</a></li>
+
+            {% url 'contact_page' as contact_page_url %}
+            <li><a href="{{ contact_page_url }}">Contact</a></li>
         </ul>
     </nav>
-
 
 </div>
