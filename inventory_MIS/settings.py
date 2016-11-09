@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
+import socket
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
@@ -20,13 +22,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = 'rglzsfv3*xljon1*_38h-92a2btokfc+@v@m-mq!yjpftx_)!!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
-
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -53,10 +55,16 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'inventory_MIS.urls'
 
+# Add static folder to STATIC_DIRS
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+# Add templates to DIRS
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,7 +96,6 @@ DATABASES = {
     }
 }
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -105,5 +112,75 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-
 STATIC_URL = '/static/'
+LOGIN_URL = '/inventory_module/accounts/'
+#LOGIN_REDIRECT_URL = '/inventory_module/inventory_page/'
+LOGIN_REDIRECT_URL = '/inventory_module/home/'
+
+# Logging setting
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        #'require_debug_false': {
+        #    '()': 'django.utils.log.RequireDebugFalse',
+        #},
+        #'require_debug_true': {
+        #    '()': 'django.utils.log.RequireDebugTrue',
+        #},
+    },
+    'formatters': {
+        'simple': {
+            'format': '[%(asctime)s] %(levelname)s %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        },
+        'verbose': {
+            'format': '[%(asctime)s] %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            #'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'development_logfile': {
+            'level': 'DEBUG',
+           # 'filters': ['require_debug_true'],
+            'class': 'logging.FileHandler',
+            'filename': 'logs/django_dev.log',
+            'formatter': 'verbose'
+        },
+        'production_logfile': {
+            'level': 'DEBUG',
+           # 'filters': ['require_debug_false'],
+            'class': 'logging.FileHandler',
+            'filename': 'logs/django_production.log',
+            'formatter': 'verbose'
+        },
+        'dba_logfile': {
+            'level': 'DEBUG',
+            #'filters': ['require_debug_false', 'require_debug_true'],
+            'class': 'logging.FileHandler',
+            'filename': 'logs/django_dba.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['console', 'production_logfile', 'development_logfile'],
+        },
+        'django.db.backends': {
+            'handlers': ['console', 'dba_logfile'],
+        },
+        'django': {
+            'handlers': ['console', 'development_logfile', 'production_logfile'],
+        },
+        'myapp': {
+            'handlers': ['console', 'development_logfile', 'production_logfile'],
+        }
+
+    }
+}
