@@ -133,8 +133,8 @@ def add_borrow_record(request):
 
         # Judge if have enough on-hand material to lend
         if (remain_qty < 0) or (remain_qty == onhand_qty):
-            print('Borrow qty is invalid! Bigger than on-hand qty or 0!')
-            lack_warning = 'Borrow qty is invalid! Bigger than on-hand qty or 0!'
+            # print('Borrow qty is invalid! Bigger than on-hand qty or 0!')
+            # lack_warning = 'Borrow qty is invalid! Bigger than on-hand qty or 0!'
             redirect_url = '/inventory_module/borrow_material/' + request.POST['goods_id'] + '/'
             return redirect(redirect_url)
 
