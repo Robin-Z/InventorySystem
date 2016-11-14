@@ -100,7 +100,7 @@ def my_borrow(request):
     borrow_good_per_page = page_util(paginator, page)
 
     return render(request, 'inventory_module/inventory/details/my_borrow_list.html',
-                  {'borrow_good_arr': borrow_good_arr, 'borrow_good_per_page': borrow_good_per_page})
+                  {'borrow_good_per_page': borrow_good_per_page})
 
 
 """
