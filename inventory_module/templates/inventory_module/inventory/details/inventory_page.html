@@ -26,7 +26,7 @@
 
             {% for good in goods_per_page %}
                 <tr class="active">
-                    <td>{{ forloop.counter }}</td>
+                    <td>{{ forloop.counter0|add:goods_per_page.start_index }}</td>
                     <td>{{ good.id }}</td>
                     <td>{{ good.goods_name }}</td>
                     <td>{{ good.goods_part_num }}</td>
