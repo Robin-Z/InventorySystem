@@ -89,6 +89,9 @@ def my_borrow(request):
         borrow_good_dict = dict(borrow_list[index_i], **borrow_goods[index_i])
         borrow_good_arr.append(borrow_good_dict)
 
+    # Reverse borrow good arr list to put the latest borrow record at the top of the list.
+    borrow_good_arr.reverse()
+        
     # Show in separate pages
     paginator = Paginator(borrow_good_arr, 5)
     page = request.GET.get('page')
