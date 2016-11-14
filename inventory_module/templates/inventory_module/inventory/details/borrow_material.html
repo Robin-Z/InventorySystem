@@ -1,4 +1,4 @@
-​{% extends "inventory_module/inventory/main_page.html" %}
+{% extends "inventory_module/inventory/main_page.html" %}
 
 {% block title %} borrow material {% endblock %}
 
@@ -8,39 +8,37 @@
 
     <div id="right_sidebar" class="row">
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-lg-12 text-center">
-                <h3 class="btn-block"><strong>Materil Information</strong></h3>
+            <div class="col-md-6 col-lg-10 col-sm-4 col-xs-2 text-center col-md-offset-1 col-lg-offset-1 col-sm-offset-1">
+                <h3 class="text-center"><strong>Materil Information</strong></h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8 col-sm-10 col-lg-6 col-lg-offset-3 text-center">
-                <form action="{% url 'inventory_module.views.add_borrow_record' %}" method="post"
-                      onsubmit="return checkBorrowQty()">
+            <div class="col-md-6 col-sm-4 col-lg-6 col-xs-2 text-center">
+                <form role="form" action="{% url 'inventory_module.views.add_borrow_record' %}" method="post" onsubmit="return checkBorrowQty()">
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col-md-12">
-                            <table class="table table-bordered table-hover text-left">
+                        <div class="col-md-8 col-lg-10 col-sm-6 text-center col-md-offset-1 col-lg-offset-1 col-sm-offset-1">
+                            <table class="table table-bordered table-hover text-center">
                                 {{ form.as_table }}
                             </table>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12 col-sm-12 col-lg-12">
-                    <span class="">
-                        {% url 'inventory' as inventory_list_url %}
-                        <button type="button" class="btn btn-default" value="Cancel" name="cancel_btn"
-                                onclick="location.href='{{ inventory_list_url }}'">
-                           <strong>
-                               Cancel
-                           </strong>
-                        </button>
-	                    <button type="submit" class="btn btn-success" value="Submit" name="submit_btn">
-                            <strong>
-                                Submit
-                            </strong>
-                        </button>
-                    </span>
+                        <div class="col-md-6 col-lg-10 col-sm-4 col-xs-2 text-center col-md-offset-1 col-lg-offset-1 col-sm-offset-1">
+
+                            {% url 'inventory' as inventory_list_url %}
+                            <button type="button" class="btn btn-default" value="Cancel" name="cancel_btn"
+                                    onclick="location.href='{{ inventory_list_url }}'">
+                                <strong>
+                                    Cancel
+                                </strong>
+                            </button>
+                            <button type="submit" class="btn btn-success" value="Submit" name="submit_btn">
+                                <strong>
+                                    Submit
+                                </strong>
+                            </button>
                         </div>
                     </div>
                 </form>
