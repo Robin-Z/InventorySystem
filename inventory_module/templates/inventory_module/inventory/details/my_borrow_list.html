@@ -25,7 +25,7 @@
 
  {% for borrow_good in borrow_good_per_page %}
     <tr> 
-        <td>{{ forloop.counter }}</td>
+        <td>{{ forloop.counter0|add:borrow_good_per_page.start_index }}</td>
         <td>{{ borrow_good.goods_name }}</td>
         <td>{{ borrow_good.goods_part_num }}</td>
         <td>{{ borrow_good.goods_spec }}</td>
