@@ -1,14 +1,38 @@
-
 {% extends "inventory_module/base.html" %}
 
-{% block title %} Main Page {% endblock %}
+{% block title %} Home | Main Page {% endblock %}
 
 {% block content %}
-<div class="main_page">
-<label for=""><li>Inventory List</li></label>
-<label for=""><li>My Inventory</li></label>
-<label for=""><li>My Info</li></label>
+    {{ block.super }}
+    <div class="container">
 
-</div>
+        {% include "inventory_module/inventory/navbar.html" %}
+
+        {% block home_content %}
+        {% endblock %}
+
+        {% block inventory_content %}
+        {% endblock %}
+
+        {% block my_inventory_content %}
+        {% endblock %}
+
+        {% block borrow_material_content %}
+        {% endblock %}
+
+        {% block borrow_result_content %}
+        {% endblock %}
+
+        {% block my_info_content %}
+        {% endblock %}
+
+        {% block about_content %}
+        {% endblock %}
+
+        {% block contact_content %}
+        {% endblock %}
+
+        {% include "inventory_module/inventory/footer.html" %}
+    </div>
 
 {% endblock %}

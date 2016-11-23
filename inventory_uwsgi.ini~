@@ -1,0 +1,29 @@
+# mysite_uwsgi.ini file
+
+[uwsgi]
+
+socket = 127.0.0.1:8008
+
+# Django-related settings
+# the django project directory(full path)
+chdir = /home/dorabot/djangoProject/project2/inventory_MIS/
+# Djangos wsgi file
+wsgi-file = inventory_MIS/wsgi.py
+
+# process-related settings
+# master
+master = true
+# maximum number of worker processes
+processes = 2
+threads = 2
+max-requestes = 6000
+
+# log file
+daemonize = /home/dorabot/djangoProject/project2/inventory_MIS/uwsgi.log
+
+# ... with appropriate permissions 
+# chmod-socket = 664
+# clear environment on exit
+# vacuum = true
+
+
