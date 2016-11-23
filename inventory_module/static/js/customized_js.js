@@ -15,7 +15,6 @@
 //
 // })
 
-
 function getObj(id){
     return document.getElementById(id);
 }
@@ -39,8 +38,47 @@ function checkBorrowQty(){
         borrowQtyField.focus();
         return false;
     }
-<<<<<<< HEAD
 }
-=======
+
+onload = function showLoginUserName() {
+    // alert("in show login user name..")
+
+    var ajaxRequest;
+    try {
+		//Opera 8.0+, Firefox, Safari
+		ajaxRequest = new XMLHttpRequest();
+	}catch(e) {
+        //IE Browsers
+        try {
+            ajaxRequest = new ActiveXObject("Mssml2.XMLHTTP");
+        } catch (e) {
+            try {
+                ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {
+                //Something went wrong
+                alert("Your browser broke!");
+                return false;
+            }
+        }
+    }
+
+    var loginUser = getObj("login_user");
+    if(ajaxRequest){
+        ajaxRequest.open("GET", "/inventory_module/navagation/");
+        ajaxRequest.responseType = "JSON";
+        ajaxRequest.setRequestHeader("Content-Type", "application/json", true);
+
+        ajaxRequest.onreadystatechange = function () {
+            if(ajaxRequest.readyState == 4 && ajaxRequest.status == 200){
+
+                var return_data = JSON.parse(ajaxRequest.responseText); // Convert JSON string to javascript object
+                // var stringObj = JSON.stringify(return_data);   // Convert Javascript object to JSON string
+
+                for(var obj in return_data){
+                    loginUser.innerText = return_data[obj];
+                }
+            }
+        }
+        ajaxRequest.send(null);
+    }
 }
->>>>>>> 8f75c7f212d9884d13b45891673bf7163f2af180
