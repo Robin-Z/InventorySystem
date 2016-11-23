@@ -1,0 +1,38 @@
+
+<div class="masthead">
+   <div class="row">
+        <div id="project-name-div" class="col-md-5 col-lg-6 col-sm-5 col-xs-2 text-left">
+            <h2 id="project-name"><strong>Dorabot Inventory System</strong></h2>
+        </div>
+
+        <div id="welcome-mark" class="col-md-6 col-md-offset-6 text-right">
+            {% url 'logout' as logout_url %}
+            <label>Welcome login: <label id="login_user"></label>
+                <a href="{{ logout_url }}">[logout]</a>
+            </label>
+        </div>
+   </div>
+
+    <nav>
+        <ul class="nav nav-justified">
+            {% url 'home_page' as home_page_url %}
+            <li id="home_nav" class=""><a href="{{ home_page_url }}">Home</a></li>
+
+            {% url 'inventory' as inventory_list_url %}
+            <li id="Inventory_list_nav"><a href="{{ inventory_list_url }}">Inventory List</a></li>
+
+            {% url 'my_borrow_list' as borrow_list_url %}
+            <li id="my_inventory_nav"><a href="{{ borrow_list_url }}">My Inventory</a></li>
+
+            {% url 'my_info' as my_info_url %}
+            <li id="my_info_nav"><a href="{{ my_info_url }}">My Info</a></li>
+
+            {% url 'about_page' as about_page_url %}
+            <li id="about_nav"><a href="{{ about_page_url }}">About</a></li>
+
+            {% url 'contact_page' as contact_page_url %}
+            <li id="contact_nav"><a href="{{ contact_page_url }}">Contact</a></li>
+        </ul>
+    </nav>
+
+</div>

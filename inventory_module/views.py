@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.core.paginator import Paginator
 from models import goods, borrow_goods_list
 from forms import my_info_form
 from django.contrib.auth.decorators import login_required
 from customized_util.inventory_util import borrow_material_form_util, page_util
+import simplejson
 
 """
 User Django's buildin login/logout system, so delete customized login and access filter views here.
@@ -17,6 +18,7 @@ Redirect to home, about and contact page
 
 @login_required(login_url='/inventory_module/accounts/login/')
 def home_page(request):
+    print request.user
     return render(request, 'inventory_module/inventory/home.html')
 
 
@@ -29,6 +31,12 @@ def about_page(request):
 def contact_page(request):
     return render(request, 'inventory_module/inventory/contact.html')
 
+@login_required(login_url='/inventory_module/accounts/login/')
+def nav_page(request):
+    name = request.user.username
+    login_user = {'user': name}
+    user_json = simplejson.dumps(login_user)
+    return HttpResponse(user_json, content_type='application/x-javascript')
 
 """
 The view of inventory list. Retrieve all the materials in database and show the data.
@@ -90,7 +98,7 @@ def my_borrow(request):
         borrow_good_arr.append(borrow_good_dict)
 
     # Reverse borrow good arr list to put the latest borrow record at the top of the list.
-    borrow_good_arr.reverse()
+    # borrow_good_arr = borrow_good_arr.reverse()
 
     # Show in separate pages
     paginator = Paginator(borrow_good_arr, 5)
@@ -99,8 +107,7 @@ def my_borrow(request):
     # Get data for each page
     borrow_good_per_page = page_util(paginator, page)
 
-    return render(request, 'inventory_module/inventory/details/my_borrow_list.html',
-                  {'borrow_good_per_page': borrow_good_per_page})
+    return render(request, 'inventory_module/inventory/details/my_borrow_list.html', {'borrow_good_per_page': borrow_good_per_page})
 
 
 """

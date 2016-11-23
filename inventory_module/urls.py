@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^query_by_keyword/$', views.query_by_keyword, name='query_by_keyword'),
     url(r'^about/$', views.about_page, name='about_page'),
     url(r'^contact/$', views.contact_page, name='contact_page'),
+    url(r'^navigation/$', views.nav_page, name='nav_page'),
 ]

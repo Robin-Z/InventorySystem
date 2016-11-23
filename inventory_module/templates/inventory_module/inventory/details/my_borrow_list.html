@@ -1,0 +1,59 @@
+
+{% extends "inventory_module/inventory/main_page.html" %}
+
+{% block title %} My Borrow List {% endblock %}
+
+{% block my_inventory_content %}
+
+{{ block.super }}
+
+<div id="right_sidebar" class="text-center">
+<h2 class="btn-block"><strong>My Inventory List</strong></h2>
+
+<table class="table table-hover table-bordered text-center">
+    <tr>
+        <th>No.</th>
+        <th>goods_name</th>
+        <th>goods_part_num</th>
+        <th>goods_spec</th>
+        <th>goods_revision</th>
+        <th>goods_unit</th>
+        <th>borrow_qty</th>
+        <th>borrow date</th>
+        <th>borrow status</th>
+    </tr>
+
+ {% for borrow_good in borrow_good_per_page %}
+    <tr> 
+        <td>{{ forloop.counter0|add:borrow_good_per_page.start_index }}</td>
+        <td>{{ borrow_good.goods_name }}</td>
+        <td>{{ borrow_good.goods_part_num }}</td>
+        <td>{{ borrow_good.goods_spec }}</td>
+        <td>{{ borrow_good.goods_revision }}</td>
+        <td>{{ borrow_good.goods_unit }}</td>
+        <td>{{ borrow_good.borrow_goods_qty }}</td>
+        <td>{{ borrow_good.borrow_date }}</td>
+        <td>{{ borrow_good.borrow_status }}</td>
+    </tr>
+ {% endfor %}
+
+</table>
+
+ <div class="pagination">
+    <span class="emphasized">
+        {% if borrow_good_per_page.has_previous %}
+        <a href="?page={{ borrow_good_per_page.previous_page_number }}">previous </a>
+        {% endif %}
+
+        <span class="current" >
+            Page {{ borrow_good_per_page.number }} of {{ borrow_good_per_page.paginator.num_pages }}
+        </span>
+
+        {% if borrow_good_per_page.has_next %}
+            <a href="?page={{ borrow_good_per_page.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+</div>
+
+{% endblock %}

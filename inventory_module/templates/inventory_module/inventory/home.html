@@ -1,0 +1,33 @@
+{% extends "inventory_module/inventory/main_page.html" %}
+
+{{ block.super }}
+
+{% block home_content %}
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+        <p class="lead">Input material name, part num, spec and ID information then click search
+            button.</p>
+        <p>
+        <h2><i>Get started today!</i></h2>
+    </div>
+
+    <div class="row head">
+        <form role="form" action="{% url 'inventory_module.views.query_by_keyword' %}" method="post">
+            {% csrf_token %}
+            <div class="input-group col-lg-6 col-md-4 col-sm-4 col-xs-3 col-md-offset-3 col-lg-offset-3 col-sm-offset-2 col-xs-offset-1">
+                <input type="text" name="query_info" class="form-control" placeholder="Search what you want">
+                <span class="input-group-btn">
+                        <button class="btn btn-success" type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+            </div>
+            <p>
+            <div class="col-lg-6 col-md-4 col-sm-4 col-xs-2 col-md-offset-3 col-sm-offset-2 text-center">
+                <label class="alert-danger">{{ search_result }} </label>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

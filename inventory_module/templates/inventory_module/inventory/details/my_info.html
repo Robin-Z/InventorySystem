@@ -1,0 +1,16 @@
+{% extends "inventory_module/inventory/main_page.html" %}
+
+{% block title %} My Info {% endblock %}
+
+{% block my_info_content %}
+
+{{ block.super }}
+
+    <div id="right_sidebar" class="text-center">
+        <h2 class="btn-block"><strong>My Info</strong></h2>
+            <table class="table table-hover table-bordered text-left">
+                {{ my_info_form.as_table }}
+            </table>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+
+#project-name {
+    display: inline;
+}
+
+#welcome-mark {
+    display: inline;
+    font-style: italic;
+}
+
+div #project-name-div {
+    display: inline;
+}
+
+.inline-div {
+    display: inline;
+}
+
+.row {
+    width: 1140px;
+}
+
+table, tr, td {
+    max-width: 1140px;
+}
+
+.no-border {
+    border-width: 4px 4px 4px 4px;
+
+}
