@@ -1,10 +1,17 @@
+<<<<<<< HEAD
 from django.shortcuts import render, redirect, HttpResponse
+=======
+from django.shortcuts import render, redirect
+>>>>>>> 8f75c7f212d9884d13b45891673bf7163f2af180
 from django.core.paginator import Paginator
 from models import goods, borrow_goods_list
 from forms import my_info_form
 from django.contrib.auth.decorators import login_required
 from customized_util.inventory_util import borrow_material_form_util, page_util
+<<<<<<< HEAD
 import simplejson
+=======
+>>>>>>> 8f75c7f212d9884d13b45891673bf7163f2af180
 
 """
 User Django's buildin login/logout system, so delete customized login and access filter views here.
@@ -18,7 +25,10 @@ Redirect to home, about and contact page
 
 @login_required(login_url='/inventory_module/accounts/login/')
 def home_page(request):
+<<<<<<< HEAD
     print request.user
+=======
+>>>>>>> 8f75c7f212d9884d13b45891673bf7163f2af180
     return render(request, 'inventory_module/inventory/home.html')
 
 
@@ -31,12 +41,15 @@ def about_page(request):
 def contact_page(request):
     return render(request, 'inventory_module/inventory/contact.html')
 
+<<<<<<< HEAD
 @login_required(login_url='/inventory_module/accounts/login/')
 def nav_page(request):
     name = request.user.username
     login_user = {'user': name}
     user_json = simplejson.dumps(login_user)
     return HttpResponse(user_json, content_type='application/x-javascript')
+=======
+>>>>>>> 8f75c7f212d9884d13b45891673bf7163f2af180
 
 """
 The view of inventory list. Retrieve all the materials in database and show the data.
@@ -50,6 +63,7 @@ def inventory(request):
     goods_list = goods.objects.all()
 
     paginator = Paginator(goods_list, 2)
+<<<<<<< HEAD
     page = request.GET.get('page')
 
     # Get data for each page
@@ -108,6 +122,67 @@ def my_borrow(request):
     borrow_good_per_page = page_util(paginator, page)
 
     return render(request, 'inventory_module/inventory/details/my_borrow_list.html', {'borrow_good_per_page': borrow_good_per_page})
+=======
+    page = request.GET.get('page')
+
+    # Get data for each page
+    goods_per_page = page_util(paginator, page)
+
+    return render(request, 'inventory_module/inventory/details/inventory_page.html',
+                  {'goods_list': goods_list, 'goods_per_page': goods_per_page})
+
+
+"""
+The view for user to borrow material.
+"""
+
+
+@login_required(login_url='/inventory_module/accounts/login/')
+def borrow_material(request, good_id):
+    # Query data from database by good_id
+    good = goods.objects.values().get(id=good_id)
+
+    # Transfer data to barrow_material_form
+    good_form = borrow_material_form_util(good)
+
+    return render(request, 'inventory_module/inventory/details/borrow_material.html', {'form': good_form})
+
+
+"""
+The information of the material that the user borrowed.
+Showing materials that borrowed by users only to the right user.
+"""
+
+
+@login_required(login_url='/inventory_module/accounts/login/')
+def my_borrow(request):
+    login_user = request.user
+    borrow_goods = []
+    borrow_good_arr = []
+    borrow_list = borrow_goods_list.objects.values().filter(borrower_id=login_user.id)
+
+    # Get good info with goods_id
+    for borrow in borrow_list:
+        borrow_goods.append(goods.objects.values().get(id=borrow['borrow_goods_id']))
+
+    # Concatenate borrow_goods_list and goods
+    for index_i in range(int(len(borrow_list))):
+        borrow_good_dict = dict(borrow_list[index_i], **borrow_goods[index_i])
+        borrow_good_arr.append(borrow_good_dict)
+
+    # Reverse borrow good arr list to put the latest borrow record at the top of the list.
+    borrow_good_arr.reverse()
+        
+    # Show in separate pages
+    paginator = Paginator(borrow_good_arr, 5)
+    page = request.GET.get('page')
+
+    # Get data for each page
+    borrow_good_per_page = page_util(paginator, page)
+
+    return render(request, 'inventory_module/inventory/details/my_borrow_list.html',
+                  {'borrow_good_per_page': borrow_good_per_page})
+>>>>>>> 8f75c7f212d9884d13b45891673bf7163f2af180
 
 
 """

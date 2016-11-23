@@ -1,4 +1,3 @@
-
 from django.conf.urls import url
 from . import views
 from django.contrib.auth.views import login, logout
@@ -17,5 +16,8 @@ urlpatterns = [
     url(r'^query_by_keyword/$', views.query_by_keyword, name='query_by_keyword'),
     url(r'^about/$', views.about_page, name='about_page'),
     url(r'^contact/$', views.contact_page, name='contact_page'),
+<<<<<<< HEAD
     url(r'^navigation/$', views.nav_page, name='nav_page'),
+=======
+>>>>>>> 8f75c7f212d9884d13b45891673bf7163f2af180
 ]

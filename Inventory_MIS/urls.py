@@ -17,7 +17,10 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth.views import login
 from inventory_module.forms import LoginForm
+<<<<<<< HEAD:InventorySystem/urls.py
 
+=======
+>>>>>>> 8f75c7f212d9884d13b45891673bf7163f2af180:inventory_MIS/urls.py
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),

@@ -53,7 +53,7 @@ MIDDLEWARE_CLASSES = (
     #'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'InventorySystem.urls'
+ROOT_URLCONF = 'Inventory_MIS.urls'
 
 # Add static folder to STATIC_DIRS
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
@@ -79,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'InventorySystem.wsgi.application'
+WSGI_APPLICATION = 'Inventory_MIS.wsgi.application'
 
 
 # Database

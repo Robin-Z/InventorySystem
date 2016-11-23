@@ -2,19 +2,11 @@
  * Created by dorabot on 10/14/16.
  */
 
-/* Removed cancel_login button on login page */
-// function cancel_login(){
-//
-//     document.getElementById("id_username").value = "";
-//     document.getElementById("id_password").value = "";
-// }
+function cancel_login(){
 
-// $(document).ready(function () {
-//
-//      alert('Here is the check borrow qty js function!');
-//
-// })
-
+    document.getElementById("id_username").value = "";
+    document.getElementById("id_password").value = "";
+}
 
 function getObj(id){
     return document.getElementById(id);
@@ -39,8 +31,4 @@ function checkBorrowQty(){
         borrowQtyField.focus();
         return false;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 8f75c7f212d9884d13b45891673bf7163f2af180
