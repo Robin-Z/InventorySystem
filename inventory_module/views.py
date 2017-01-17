@@ -4,7 +4,7 @@ from models import goods, borrow_goods_list
 from forms import my_info_form
 from django.contrib.auth.decorators import login_required
 from customized_util.inventory_util import borrow_material_form_util, page_util
-import simplejson
+import json as simplejson
 
 """
 User Django's buildin login/logout system, so delete customized login and access filter views here.
@@ -34,12 +34,9 @@ def contact_page(request):
 
 @login_required(login_url='/inventory_module/accounts/login/')
 def nav_page(request):
-    print('nav page')
-    print request.user.username
     name = request.user.username
     login_user = {'user': name}
     user_json = simplejson.dumps(login_user)
-    print user_json
     return HttpResponse(user_json, content_type='application/x-javascript')
 
 """
@@ -49,11 +46,12 @@ The view of inventory list. Retrieve all the materials in database and show the 
 
 @login_required(login_url='/inventory_module/accounts/login/')
 def inventory(request):
-    # get inventory info from database and show them in inventory_page0.html
+    # get inventory info from database and show them in inventory_page.html
 
     goods_list = goods.objects.all()
+    print goods_list
 
-    paginator = Paginator(goods_list, 2)
+    paginator = Paginator(goods_list, 5)
     page = request.GET.get('page')
 
     # Get data for each page
@@ -71,7 +69,8 @@ The view for user to borrow material.
 @login_required(login_url='/inventory_module/accounts/login/')
 def borrow_material(request, good_id):
     # Query data from database by good_id
-    good = goods.objects.values().get(id=good_id)
+    print('in view: borrow material.')
+    good = goods.objects.values().get(goods_id=good_id)
 
     # Transfer data to barrow_material_form
     good_form = borrow_material_form_util(good)
@@ -94,7 +93,7 @@ def my_borrow(request):
 
     # Get good info with goods_id
     for borrow in borrow_list:
-        borrow_goods.append(goods.objects.values().get(id=borrow['borrow_goods_id']))
+        borrow_goods.append(goods.objects.values().get(goods_id=borrow['borrow_goods_id']))
 
     # Concatenate borrow_goods_list and goods
     for index_i in range(int(len(borrow_list))):
@@ -102,7 +101,8 @@ def my_borrow(request):
         borrow_good_arr.append(borrow_good_dict)
 
     # Reverse borrow good arr list to put the latest borrow record at the top of the list.
-    # borrow_good_arr = borrow_good_arr.reverse()
+    borrow_good_arr.reverse()
+    # print borrow_good_arr
 
     # Show in separate pages
     paginator = Paginator(borrow_good_arr, 5)
@@ -157,7 +157,7 @@ def add_borrow_record(request):
                                               borrow_status='Open'):
 
             # Update on-handQty in database
-            good_borrowed = goods.objects.get(id=request.POST['goods_id'])
+            good_borrowed = goods.objects.get(goods_id=request.POST['goods_id'])
 
             good_borrowed.goods_qty = remain_qty
             good_borrowed.save()
@@ -187,6 +187,11 @@ def query_by_keyword(request):
         try:
             # search data from database per parameters of goods in turn, until retrieve the parameters provided.
             query_good = goods.objects.values().filter(goods_name=query_info)
+
+            # If it is not a English name, try to search a Chinese name
+            if not query_good:
+                query_good = goods.objects.values().filter(goods_name_Chinese=query_info)
+
             if len(query_good) == 0:
                 query_good = goods.objects.values().filter(goods_part_num=query_info)
             if len(query_good) == 0:
@@ -194,7 +199,7 @@ def query_by_keyword(request):
             if len(query_good) == 0:
                 query_good = goods.objects.values().filter(goods_location=query_info)
             if len(query_good) == 0:
-                query_good = goods.objects.values().filter(id=int(query_info))
+                query_good = goods.objects.values().filter(goods_id=int(query_info))
         except Exception as searchError:
             print('queryByKeyWord: searchError: %s' % searchError)
             # return search result if no data found in database
